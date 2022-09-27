@@ -1,0 +1,68 @@
+<ng-template #myTemplate1 let-datos1="datos1">
+
+   <h2 style="margin-top: 10px;margin-left: 0.8em;"></h2>
+
+
+<div  style="overflow-y: scroll;overflow-x: hidden;height: 500px ;">
+    <mat-card style="padding:2px;margin:5px;"  *ngFor="let item of datos1;let i = index">
+      <mat-card-content>
+
+        <div class="row">
+          <div class="col">
+            <mat-label style="margin: 20px;">{{ ((i+1) +'/'+datos1.length )}}</mat-label>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row"  *ngIf="item.nombre_com">
+
+              <div class="col-1">
+              </div>
+              <div class="col-11">
+                <mat-label>{{ (item.nombre_com )}}</mat-label>
+            </div>
+          </div>
+
+          <div class="row"  *ngIf="item.nombrepersona">
+            <div class="col-1">
+            </div>
+            <div class="col-11">
+              <mat-label>{{ (item.nombrepersona )}}</mat-label>
+           </div>
+          </div>
+        <div class="row"  *ngIf="item.nif">
+              <div class="col-1">
+              </div>
+              <div class="col-6">
+                <mat-label>{{ (item.nif )}}</mat-label>
+            </div>
+            <div class="col-5">
+              <mat-label>{{ (item.fecha )}}</mat-label>
+            </div>
+        </div>
+
+        <div class="row" >
+          <div class="col">
+            <div  style="margin: 20px;" [id]="'formio'+item.id"></div>
+          </div>
+        </div>
+
+        </div>
+
+        </mat-card-content>
+
+      <!-- <mat-card-actions align="end">
+        </mat-card-actions> -->
+    </mat-card>
+ </div>
+<div style="text-align: end;margin-top: 5px;">
+     <button mat-button color="primary" (click)="CerrarEldialogo()">{{'Aceptar' | translate }}</button>
+</div>
+
+</ng-template>
+
+
+<ng-container *ngTemplateOutlet="myTemplate1;context:ctx" ></ng-container>
+
+
+

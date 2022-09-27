@@ -1,0 +1,65 @@
+  <mat-card style="padding:2px">
+  <mat-card-title>{{'Encuestas' | translate}}</mat-card-title>
+  <mat-card-content>
+      <div class="container"  [formGroup]="formulario">
+      <div class="row">
+        <div class="col-9">
+          <mat-form-field style="width: 100%;">
+            <mat-label>{{'Seleccione un tipo de encuesta' | translate }}</mat-label>
+            <mat-select #tipcoselect formControlName="tipo">
+              <!-- <mat-select #tipcoselect formControlName="tipo" (selectionChange)="ontiposelect(tipcoselect)"></mat-select> -->
+              <mat-option  value="1">{{ 'Propietario - Comunidad' | translate}} </mat-option>
+              <mat-option  value="2">{{ 'Empleado - Comunidad' | translate}}</mat-option>
+              <mat-option   value="3">{{ 'Propietario' | translate}}</mat-option>
+              <mat-option   value="4">{{ 'Empleado' | translate}}</mat-option>
+              <mat-option   value="5">{{ 'Proveedor' | translate}}</mat-option>
+              <mat-option   value="6">{{ 'General' | translate}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3" style="display: flex;flex-wrap: wrap;justify-content: center;align-content: center;">
+            <mat-slide-toggle formControlName="estadoaux">{{'Activo' | translate }}</mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="row"  *ngIf="(formulario.get('tipo')!.value | stringtonumber) === 1 || (formulario.get('tipo')!.value | stringtonumber) === 2">
+        <div class="col-12">
+          <mat-form-field  appControlerror class="example-full-width" style="width: 100%;">
+            <mat-label>{{'Comunidad' | translate }}</mat-label>
+            <mat-select #comunidadSelect formControlName="id_comunidad">
+            <!--   <mat-select #comunidadSelect formControlName="id_comunidad" (selectionChange)="onComunidaselect(comunidadSelect)"> -->
+              <mat-option *ngFor="let comunidad of comunidades" [value]="comunidad.id_comunidad">{{comunidad.nombre_com}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-12">
+          <mat-form-field appControlerror class="example-full-width" style="width: 100%;">
+            <mat-label>{{'Descripción' | translate }}</mat-label>
+            <input matInput formControlName="descripcion">
+          <!--   <mat-error *ngIf="this.formulario.get('descripcion').errors">
+                {{'error en el campo' | translate }}
+            </mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div id="formio"></div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button color="primary" (click)="compFicha_onSubmit(formulario)" [disabled]="!formulario.touched || !formulario.valid   || esperaresultado">{{'Aceptar' | translate }}</button>
+    <button mat-button color="warn" (click)="CerrarEldialogo()">{{'Cancelar' | translate }}</button>
+  </mat-card-actions>
+</mat-card>
+

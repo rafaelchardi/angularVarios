@@ -1,0 +1,41 @@
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="open=!open">
+   <mat-icon>menu</mat-icon>
+ </button>
+ <span>Aplicacion</span>
+ <span class="example-spacer"></span>
+ <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+   <mat-icon>favorite</mat-icon>
+ </button>
+ <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+  <mat-icon>share</mat-icon>
+</button> -->
+
+</mat-toolbar>
+
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="open">
+    <mat-toolbar (click)="open=!open" >
+
+     Menu
+
+    </mat-toolbar>
+     <mat-nav-list>
+      <a mat-list-item routerLink="encuestas" >encuestas</a>
+      <a mat-list-item routerLink="grid">Grid</a>
+      <a mat-list-item [routerLink]="['formulario', 'esto es el nombre', 'esto es le texto']"
+                      [queryParams]="{ order: 'popular'}">Formulario</a>
+      <a mat-list-item  routerLink="apollo">apollo</a>
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content  #mainNav (scroll)="myMethod()">
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

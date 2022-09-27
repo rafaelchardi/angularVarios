@@ -1,0 +1,93 @@
+
+
+<div class="d-md-flex align-items-center mb-1" >
+  <h3 class="page-title" style="margin-top: -25px; color: #38A0AC;"> <i class="fal fa-comments-alt fa-1x"></i> {{"Encuestas"|translate}}</h3>
+</div>
+
+  <div class="row">
+    <div class="col-6">
+
+    </div>
+    <div class="col-6" style="text-align: end;">
+      <button (click)="openDialog(undefined)" class="btn btn-md botonCreacion text-white ml-2" style="margin: 0;"> <i class="fal fa-plus mr-2 iconoBlock"></i>{{"Añadir" | translate}}</button>
+      <button (click)="openDialog(encuestasSeleccionada)" *ngIf="encuestasSeleccionada" class="btn btn-md btn-success text-white ml-2" style="margin: 0;"> <i class="fal fa-edit mr-2 iconoBlock"></i>{{"Editar" | translate}}</button>
+      <button (click)="BorrarElemento(encuestasSeleccionada)" *ngIf="encuestasSeleccionada" [disabled]="esperaresultado" class="btn btn-md btn-danger text-white ml-2" style="margin: 0;"> <i class="fal fa-trash mr-2 iconoBlock"></i>{{"Borrar" | translate}}</button>
+      <!-- <button (click)="encuestasSeleccionada.verEncuestas=!encuestasSeleccionada.verEncuestas"  *ngIf="encuestasSeleccionada && encuestasSeleccionada?.totalencuestas >= 1" class="btn btn-md btn-success text-white ml-2" style="margin: 0;"> <i class="fal fa-eye mr-2 iconoBlock"></i>{{"Encuestas" | translate}}</button> -->
+      <button (click)="verResultados(encuestasSeleccionada)"  *ngIf="encuestasSeleccionada && (encuestasSeleccionada.totalencuestas! >= '1')" class="btn btn-md btn-success text-white ml-2" style="margin: 0;"> <i class="fal fa-eye mr-2 iconoBlock"></i>{{"Encuestas" | translate}}</button>
+      <a [routerLink]="['visor',1,2,3]" [queryParams]="{allowEdit: '1', allowDelete: '2'}">{{"Encuestas" | translate}}</a>
+    </div>
+ </div>
+<div class="row">
+  <div class="col-md-12">
+    <i class="fa-solid fa-list-check"></i>
+
+    <div class="table-responsive" *ngIf='encuestasData'>
+      <table id ="tablaEncuestas"  class="table bg-white table-hover align-middle mb-0 no-wrap animated fadeIn"
+
+        >
+        <!-- (blur)="focusout($event)" -->
+          <thead>
+              <tr class="titulosLista" >
+                  <th scope="col" style="width: 10px;"></th>
+                  <th  role="button"><i class=" fal fa-info mr-2 iconoTablas"></i><div class="pantallaMuestra">{{"Descripción"|translate}}</div></th>
+                  <th scope="col">                                               <div class="pantallaMuestra text-right" >{{"Tipo"|translate}}</div></th>
+                  <th scope="col">                                               <div class="pantallaMuestra text-right" >{{"Activa"|translate}}</div></th>
+                  <th scope="col">                                               <i class=" fal fa-list-check mr-2 iconoTablas"></i><div class="pantallaMuestra text-right" >{{"T.Encuestas"|translate}}</div></th>
+              </tr>
+          </thead>
+          <tbody>
+             <ng-container  *ngFor="let co of encuestasData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize"
+                     >
+              <tr  class="cursor-pointer" id="{{ co.id }}" (click)="dblclickLista(co)" (click)="encuestasSeleccionada=co" >
+                  <td  style="width: 10px;">
+                    <i *ngIf="co===encuestasSeleccionada" class="fa-light fa-circle-play"></i>
+                  </td>
+                 <td class="align-middle"  >
+                      <h5>
+                        {{ co.descripcion }}
+                      </h5>
+                      <h6 *ngIf="co.nombre_comco">
+                        {{ co.nombre_comco }}
+                      </h6>
+                 </td>
+                 <td  class="align-middle" >
+                   {{ getDescripcionTipoencuesta(co) | translate }}
+                </td>
+                <td  class="align-middle text-right" style="width: 20px;" >
+                     <span [ngSwitch]="co.estado">
+                     <p *ngSwitchCase="1">
+                          <i class="text-success fal fa-circle-check mr-2 iconoBlock"></i>
+                     </p>
+                     <p *ngSwitchCase="0">
+                          <i class="text-warning fal fa-ban mr-2 iconoBlock"></i>
+                     </p>
+                     </span>
+               </td>
+                 <td  class="align-middle text-right" style="width: 20px;" >
+                     {{ co.totalencuestas }}
+                </td>
+              </tr>
+              <!-- <tr  *ngIf="co.verEncuestas">
+                <td colspan="5" style="text-align: center">
+                  <div style="width:100%;">
+                  <div style="overflow: auto;overflow-x: scroll;width: 950px;max-width: 950px;    display: flex">
+
+                    <div *ngFor="let item of formularios" [id]="'formio'+item.id">
+                      adsfasdf
+                   </div>
+                 </div>
+                </div>
+               </td>
+              </tr> -->
+            </ng-container>
+          </tbody>
+      </table>
+  </div>
+  <div class="d-flex justify-content-center p-2 pt-3 bg-white border-top">
+  </div>
+
+
+</div>
+<notifier-container></notifier-container>
+</div>
+
